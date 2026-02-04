@@ -111,5 +111,12 @@ def cycle(f1, f2, f3):
     >>> do_two_cycles(1)
     19
     """
-    "*** YOUR CODE HERE ***"
+    def repeater(n):
+        def apply(x):
+            functions = [f1, f2, f3]
+            for i in range(n):
+                x = functions[i % 3](x)
+            return x
+        return apply
+    return repeater
 
