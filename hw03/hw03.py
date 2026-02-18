@@ -79,7 +79,14 @@ def interleaved_sum(num, f_odd, f_even):
     >>> check(SOURCE_FILE, 'interleaved_sum', ['BitAnd', 'BitOr', 'BitXor']) # ban bitwise operators, don't worry about these if you don't know what they are
     True
     """
-    f_odd(n - (n-1)) + f_even(n - (n-2))
+    def helper(i, odd):
+        if i > num:
+            return 0
+        if odd:
+            return f_odd(i) + helper(i + 1, False)
+        else:
+            return f_even(i) + helper(i + 1, True)
+    return helper(1, True)
 
 
 def next_smaller_dollar(bill):
@@ -115,7 +122,13 @@ def count_dollars(sum_needed):
     >>> check(SOURCE_FILE, 'count_dollars', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    def count_using(bill, amount):
+        if amount == 0:
+            return 1
+        if amount < 0 or bill == None:
+            return 0
+        return count_using(bill, amount - bill) + count_using(next_smaller_dollar(bill), amount)
+    return count_using(100, sum_needed)
 
 
 def next_larger_dollar(bill):
@@ -151,7 +164,13 @@ def count_dollars_upward(sum_needed):
     >>> check(SOURCE_FILE, 'count_dollars_upward', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    def count_using(bill, amount):
+        if amount == 0:
+            return 1
+        if amount < 0 or bill == None:
+            return 0
+        return count_using(bill, amount - bill) + count_using(next_larger_dollar(bill), amount)
+    return count_using(1, sum_needed)
 
 
 def print_move(origin, destination):
