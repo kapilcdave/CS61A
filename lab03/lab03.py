@@ -17,7 +17,8 @@ def close(s: list[int], k: int) -> int:
     assert k >= 0
     count = 0
     for i in range(len(s)):  # Use a range to loop over indices
-        "*** YOUR CODE HERE ***"
+        if abs(s[i] - i) <= k:
+            count += 1
     return count
 
 
@@ -33,7 +34,7 @@ def close_list(s: list[int], k: int) -> list[int]:
     [2, 4, 3, 5]
     """
     assert k >= 0
-    return [___ for i in range(len(s)) if ___]
+    return [s[i] for i in range(len(s)) if abs(s[i] - i) <= k]
 
 
 def double_eights(n: int) -> bool:
@@ -57,7 +58,12 @@ def double_eights(n: int) -> bool:
     >>> check(SOURCE_FILE, 'double_eights', ['While', 'For', 'In', 'Str'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    
+    if n < 10:
+        return False
+    if n % 10 == 8 and (n // 10) % 10 == 8:
+        return True
+    return double_eights(n // 10)
 
 
 def make_onion(f, g):
@@ -86,11 +92,11 @@ def make_onion(f, g):
     """
     def can_reach(x, y, limit):
         if limit < 0:
-            return ____
+            return False
         elif x == y:
-            return ____
+            return True
         else:
-            return can_reach(____, ____, limit - 1) or can_reach(____, ____, limit - 1)
+            return can_reach(f(x), y, limit - 1) or can_reach(g(x), y, limit - 1)
     return can_reach
 
 
@@ -108,7 +114,11 @@ def ten_pairs(n):
     >>> check(SOURCE_FILE, 'ten_pairs', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if n < 10:
+        return 0
+    last = n % 10
+    rest = n // 10
+    return count_digit(rest, 10 - last) + ten_pairs(rest)
 
 
 def count_digit(n, digit):
@@ -121,5 +131,10 @@ def count_digit(n, digit):
     >>> check(SOURCE_FILE, 'count_digits', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if n == 0:
+        return 0
+    if n % 10 == digit:
+        return 1 + count_digit(n // 10, digit)
+    else:
+        return count_digit(n // 10, digit)
 
