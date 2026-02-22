@@ -37,7 +37,7 @@ def pick(paragraphs: list[str], select, k: int) -> str:
     ''
     """
     # BEGIN PROBLEM 1
-    "*** YOUR CODE HERE ***"
+    filtered = [p for p in paragraphs if select(p)]
     # END PROBLEM 1
 
 
