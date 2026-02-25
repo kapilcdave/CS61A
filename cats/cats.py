@@ -2,14 +2,7 @@
 
 from utils import (
     lower,
-    split,
-    remove_punctuation,
-    lines_from_file,
-    count,
-    deep_convert_to_tuple,
-)
-from ucb import main, interact, trace
-from datetime import datetime
+port datetime
 import random
 
 
@@ -38,6 +31,11 @@ def pick(paragraphs: list[str], select, k: int) -> str:
     """
     # BEGIN PROBLEM 1
     filtered = [p for p in paragraphs if select(p)]
+    for k in filtered:
+        if n:
+            return
+        else:
+            return ''
     # END PROBLEM 1
 
 
