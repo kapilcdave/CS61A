@@ -2,7 +2,14 @@
 
 from utils import (
     lower,
-port datetime
+    split,
+    remove_punctuation,
+    lines_from_file,
+    count,
+    deep_convert_to_tuple,
+)
+from ucb import main, interact, trace
+from datetime import datetime
 import random
 
 
