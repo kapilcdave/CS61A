@@ -91,7 +91,15 @@ def accuracy(entered: str, source: str) -> float:
     entered_words = split(entered)
     source_words = split(source)
     # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
+    if not entered_words and not source_words:
+        return 100.0
+    if not entered_words:
+        return 0.0
+    num_correct = 0
+    for i, entered_word in enumerate(entered_words):
+        if i < len(source_words) and entered_word == source_words[i]:
+                num_correct += 1
+    return (num_correct / len(entered_words)) * 100
     # END PROBLEM 3
 
 
@@ -109,7 +117,7 @@ def wpm(entered: str, elapsed: int) -> float:
     """
     assert elapsed > 0, "Elapsed time must be positive"
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    return (len(entered) / 5) / (elapsed / 60)
     # END PROBLEM 4
 
 
