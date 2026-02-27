@@ -58,7 +58,10 @@ def about(keywords: list[str]):
     assert all([lower(x) == x for x in keywords]), "keywords should be lowercase."
 
     # BEGIN PROBLEM 2
-    "*** YOUR CODE HERE ***"
+    def check(paragraph):
+        words = split(lower(remove_punctuation(paragraph)))
+        return any(word in keywords for word in words)
+    return check
     # END PROBLEM 2
 
 
