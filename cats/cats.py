@@ -38,11 +38,7 @@ def pick(paragraphs: list[str], select, k: int) -> str:
     """
     # BEGIN PROBLEM 1
     filtered = [p for p in paragraphs if select(p)]
-    for k in filtered:
-        if n:
-            return
-        else:
-            return ''
+    return filtered[k] if k < len(filtered) else ''
     # END PROBLEM 1
 
 
