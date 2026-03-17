@@ -274,11 +274,13 @@ class FireAnt(Ant):
         # BEGIN Problem 5
         current_place = self.place
         bees_to_hit = list(current_place.bees)
+        for bee in bees_to_hit:
+            bee.reduce_health(damage_taken)
         Ant.reduce_health(self, damage_taken)
         if self.health <= 0:
-            total_damage = damage_taken + self.damage
             for bee in bees_to_hit:
-                bee.reduce_health(total_damage)
+                if bee.health > 0:
+                    bee.reduce_health(self.damage)
         # END Problem 5
 
 # BEGIN Problem 6
