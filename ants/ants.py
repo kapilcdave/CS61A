@@ -285,10 +285,32 @@ class FireAnt(Ant):
 
 # BEGIN Problem 6
 # The WallAnt class
+class WallAnt(Ant):
+    name = 'Wall'
+    food_cost = 4
+    implemented = True
+    def __init__(self, health=4):
+        super().__init__(health)
 # END Problem 6
 
 # BEGIN Problem 7
 # The HungryAnt Class
+class HungryAnt(Ant):
+    name = 'Hungry'
+    food_cost = 4
+    chew_cooldown = 3
+    implemented = True
+    def __init__(self, health=1):
+        super().__init__(health)
+        self.cooldown = 0
+    def action(self, gamestate):
+        if self.cooldown > 0:
+            self.cooldown -= 1
+        else:
+            bee = random_bee(self.place.bees)
+            if bee:
+                bee.reduce_health(bee.health)
+                self.cooldown = self.chew_cooldown
 # END Problem 7
 
 
