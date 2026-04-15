@@ -82,7 +82,7 @@ def eval_and(expressions):
     result = scheme_t
     while expressions != nil:
         result = calc_eval(expressions.first)
-        if not result:
+        if result is False:
             return result
         expressions = expressions.rest
     return result
@@ -104,7 +104,10 @@ def eval_define(expressions):
     >>> calc_eval(Link("d", Link(4, Link(2, nil))))
     2
     """
-    "*** YOUR CODE HERE ***"
+    variable = expressions.first
+    value = calc_eval(expressions.rest.first)
+    bindings[variable] = value
+    return variable
 
 OPERATORS = { "//": floor_div, "+": addition, "-": subtraction, "*": multiplication, "/": division }
 
