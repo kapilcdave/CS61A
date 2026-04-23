@@ -55,7 +55,12 @@ class Frame:
         if len_link(formals) != len_link(vals):
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 8
-        "*** YOUR CODE HERE ***"
+        child = Frame(self)
+        while isinstance(formals, Link):
+            child.define(formals.first, vals.first)
+            formals = formals.rest
+            vals = vals.rest
+        return child
         # END PROBLEM 8
 
 ##############
