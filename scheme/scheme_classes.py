@@ -25,16 +25,20 @@ class Frame:
     def define(self, symbol, value):
         """Define Scheme SYMBOL to have VALUE."""
         # BEGIN PROBLEM 1
+        # Store the symbol and its corresponding value in the frame's bindings dictionary
         self.bindings[symbol] = value
         # END PROBLEM 1
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL. Errors if SYMBOL is not found."""
         # BEGIN PROBLEM 1
+        # First, check if the symbol is directly bound in the current frame
         if symbol in self.bindings:
             return self.bindings[symbol]
+        # If not found, and there is a parent frame, recursively look up in the parent frame
         elif self.parent is not None:
             return self.parent.lookup(symbol)
+        # If it's not found in any frame up the chain, it's an error
         else:
             raise SchemeError('unknown identifier: {0}'.format(symbol))
         # END PROBLEM 1
@@ -55,11 +59,16 @@ class Frame:
         if len_link(formals) != len_link(vals):
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 8
+        # Create a new frame where 'self' (the current frame) is the parent
         child = Frame(self)
+        # Loop through the given formals and values (both are linked lists)
         while isinstance(formals, Link):
+            # Bind each formal parameter to its corresponding value in the new frame
             child.define(formals.first, vals.first)
+            # Advance to the next parameter and value
             formals = formals.rest
             vals = vals.rest
+        # Return the newly created and populated child frame
         return child
         # END PROBLEM 8
 

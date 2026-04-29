@@ -36,18 +36,23 @@ def do_define_form(expressions, env):
         # assigning a name to a value e.g. (define x (+ 1 2))
         validate_form(expressions, 2, 2) # Checks that expressions is a list of length exactly 2
         # BEGIN PROBLEM 4
+        # Evaluate the expression that we are binding to the name
         value = scheme_eval(expressions.rest.first, env)
+        # Bind the symbol (signature) to the evaluated value in the current environment
         env.define(signature, value)
+        # Return the symbol that was bound, as define returns the symbol
         return signature
         # END PROBLEM 4
     elif isinstance(signature, Link) and scheme_symbolp(signature.first):
         # defining a named procedure e.g. (define (f x y) (+ x y))
         # BEGIN PROBLEM 10
-        name = signature.first
-        formals = signature.rest
+        name = signature.first # The first element of the signature is the function name
+        formals = signature.rest # The rest of the elements are the formal parameters
         validate_formals(formals)
-        body = expressions.rest
+        body = expressions.rest # The rest of the expressions make up the body of the function
+        # Create a LambdaProcedure object representing the function
         procedure = LambdaProcedure(formals, body, env)
+        # Bind the function name to the newly created LambdaProcedure in the current frame
         env.define(name, procedure)
         return name
         # END PROBLEM 10
@@ -64,6 +69,7 @@ def do_quote_form(expressions, env):
     """
     validate_form(expressions, 1, 1)
     # BEGIN PROBLEM 5
+    # The quote form simply returns its operand completely unevaluated
     return expressions.first
     # END PROBLEM 5
 
@@ -90,7 +96,9 @@ def do_lambda_form(expressions, env):
     formals = expressions.first
     validate_formals(formals)
     # BEGIN PROBLEM 7
+    # The body of the lambda is everything after the formal parameters
     body = expressions.rest
+    # Return a new LambdaProcedure with the formals, body, and the environment where it was created
     return LambdaProcedure(formals, body, env)
     # END PROBLEM 7
 
@@ -124,14 +132,19 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
+    # If there are no expressions, (and) evaluates to #t (True)
     if expressions is nil:
         return True
     while expressions is not nil:
+        # Evaluate the current expression
         val = scheme_eval(expressions.first, env)
+        # If the value is a false value, short-circuit and immediately return that false value
         if not is_scheme_true(val):
             return val
+        # If we are at the last expression, return its value (whether true or false)
         if expressions.rest is nil:
             return val
+        # Move to the next expression
         expressions = expressions.rest
     # END PROBLEM 12
 
@@ -150,14 +163,19 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
+    # If there are no expressions, (or) evaluates to #f (False)
     if expressions is nil:
         return False
     while expressions is not nil:
+        # Evaluate the current expression
         val = scheme_eval(expressions.first, env)
+        # If the value is a true value, short-circuit and immediately return that true value
         if is_scheme_true(val):
             return val
+        # If we are at the last expression, return its value
         if expressions.rest is nil:
             return val
+        # Move to the next expression
         expressions = expressions.rest
     # END PROBLEM 12
 
@@ -178,8 +196,10 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
+            # If the true predicate does not have a corresponding result sub-expression, return the predicate value
             if clause.rest is nil:
                 return test
+            # Evaluate all expressions in the result sub-expression and return the value of the last one
             return eval_all(clause.rest, env)
             # END PROBLEM 13
         expressions = expressions.rest
@@ -247,7 +267,9 @@ def do_mu_form(expressions, env):
     formals = expressions.first
     validate_formals(formals)
     # BEGIN PROBLEM 11
+    # The body of the mu procedure is everything after the formal parameters
     body = expressions.rest
+    # Return a new MuProcedure (which doesn't store its definition environment)
     return MuProcedure(formals, body)
     # END PROBLEM 11
 
