@@ -24,14 +24,22 @@
 ;; Return the value for a key in a dictionary list
 (define (get dict key)
   ; BEGIN PROBLEM 15
-  'replace-this-line
+    (cond
+    ((null? dict) #f)
+    ((eq? (car (car dict)) key) (cadr (car dict)))
+    (else (get (cdr dict) key)))
   ; END PROBLEM 15
   )
 
 ;; Return a dictionary list with a (key value) pair
 (define (set dict key val)
   ; BEGIN PROBLEM 15
-  'replace-this-line
+  (cond
+    ((null? dict) (list (list key val)))
+    ((eq? (car (car dict)) key)
+     (cons (list key val) (cdr dict)))
+    (else
+      (cons (car dict) (set (cdr dict) key val))))
   ; END PROBLEM 15
   )
 
