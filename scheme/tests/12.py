@@ -7,26 +7,15 @@ test = {
         {
           'code': r"""
           scm> (and)
-          362a13f62b8278cff7410c0d72fbb640
-          # locked
-          # choice: #t
-          # choice: #f
-          # choice: SchemeError
+          #t
           scm> (and 1 #f)
-          dee55ab436bc219727575ed9b83ed831
-          # locked
-          # choice: 1
-          # choice: #t
-          # choice: #f
+          #f
           scm> (and (+ 1 1) 1)
-          e9c72ee24bf5f0040e3f510cd1634fbe
-          # locked
+          1
           scm> (and #f 5)
-          dee55ab436bc219727575ed9b83ed831
-          # locked
+          #f
           scm> (and 4 5 (+ 3 3))
-          68bf08aa7c411511f0a9af3cac39f793
-          # locked
+          6
           scm> (not (and #t #f 42 (/ 1 0)))
           362a13f62b8278cff7410c0d72fbb640
           # locked
