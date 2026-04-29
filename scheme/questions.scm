@@ -48,6 +48,14 @@
 ;; implement solution-code
 (define (solution-code problem solution)
   ; BEGIN PROBLEM 16
-  'replace-this-line
+  (cond
+    ((null? problem) '())
+    ((list? (car problem))
+     (cons (solution-code (car problem) solution)
+           (solution-code (cdr problem) solution)))
+    ((equal? (car problem) '_____)
+     (cons solution (solution-code (cdr problem) solution)))
+    (else
+      (cons (car problem) (solution-code (cdr problem) solution))))
   ; END PROBLEM 16
   )
