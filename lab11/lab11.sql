@@ -20,5 +20,8 @@ CREATE table leads AS
 
 
 CREATE table long_movies AS 
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+  SELECT (year / 10 * 10) || 's' AS decade, COUNT(*) AS count
+  FROM titles
+  WHERE runtime > 180
+  GROUP BY decade;
 
