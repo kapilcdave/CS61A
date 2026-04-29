@@ -15,7 +15,6 @@
   (if (> n 0)
       (begin
         (color "darkgoldenrod")
-        (pensize 2)
         (pendown)
         (forward size) (left 90)
         (forward size) (left 90)
@@ -23,7 +22,6 @@
         (forward size) (left 90)
         
         (color (car colors))
-        (pensize 4)
         (circle size 90)
         
         (fib-spiral-out (* size phi) (- n 1) 
@@ -31,7 +29,6 @@
 
 (define (draw-horse)
   (color "saddlebrown")
-  (pensize 2)
   (penup) (goto -160 -120) (setheading 0) (pendown)
   (begin_fill)
   (forward 140) (left 90) (forward 60) (left 90) 
@@ -44,19 +41,16 @@
   (forward 60) (left 90) (forward 30) (left 90)
   (end_fill)
   
-  (pensize 8)
   (penup) (goto -140 -120) (setheading 250) (pendown) (forward 70)
   (penup) (goto -120 -120) (setheading 270) (pendown) (forward 70)
   (penup) (goto -60 -120) (setheading 260) (pendown) (forward 70)
   (penup) (goto -40 -120) (setheading 280) (pendown) (forward 70)
   
   (penup) (goto -160 -80) (setheading 190) (pendown)
-  (pensize 5)
   (forward 50))
 
 (define (draw-rider)
   (color "purple")
-  (pensize 6)
   (penup) (goto -100 -60) (pendown)
   (goto -90 10) 
   
@@ -79,12 +73,10 @@
   
   (penup) (goto -95 0) (pendown)
   (color "purple")
-  (pensize 5)
   (goto 0 0)
   
   (penup) (goto -90 5) (pendown)
   (color "white")
-  (pensize 1)
   (goto -5 -40))
 
 (define (draw-sphere)
@@ -101,7 +93,6 @@
   (end_fill)
   
   (color "white")
-  (pensize 2)
   (penup) (goto 0 -4) (pendown)
   (circle 4))
 
