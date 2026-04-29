@@ -5,15 +5,16 @@
 ;;; Title: The Golden Spin
 ;;;
 ;;; Description:
-;;;   A sphere takes flight now,
-;;;   Golden rectangle in spin,
+;;;   A geometric spin,
+;;;   Squares and centers perfectly aligned,
 ;;;   Infinite power.
 
-(define phi 1.618033988749895)
+(define phi (/ (+ 1 (sqrt 5)) 2))
 
 (define (fib-spiral-out size n colors)
   (if (> n 0)
       (begin
+        ; Draw the square
         (color "darkgoldenrod")
         (pendown)
         (forward size) (left 90)
@@ -21,92 +22,47 @@
         (forward size) (left 90)
         (forward size) (left 90)
         
-        (color (car colors))
-        (circle size 90)
-        
-        (fib-spiral-out (* size phi) (- n 1) 
-                        (append (cdr colors) (list (car colors)))))))
-
-(define (draw-horse)
-  (color "saddlebrown")
-  (penup) (goto -160 -120) (setheading 0) (pendown)
-  (begin_fill)
-  (forward 140) (left 90) (forward 60) (left 90) 
-  (forward 140) (left 90) (forward 60) (left 90)
-  (end_fill)
-  
-  (penup) (goto -20 -60) (setheading 45) (pendown)
-  (begin_fill)
-  (forward 60) (left 90) (forward 30) (left 90) 
-  (forward 60) (left 90) (forward 30) (left 90)
-  (end_fill)
-  
-  (penup) (goto -140 -120) (setheading 250) (pendown) (forward 70)
-  (penup) (goto -120 -120) (setheading 270) (pendown) (forward 70)
-  (penup) (goto -60 -120) (setheading 260) (pendown) (forward 70)
-  (penup) (goto -40 -120) (setheading 280) (pendown) (forward 70)
-  
-  (penup) (goto -160 -80) (setheading 190) (pendown)
-  (forward 50))
-
-(define (draw-rider)
-  (color "purple")
-  (penup) (goto -100 -60) (pendown)
-  (goto -90 10) 
-  
-  (penup) (goto -90 25) (setheading 0) (pendown)
-  (color "peachpuff")
-  (begin_fill) (circle 15) (end_fill)
-  
-  (penup) (goto -115 40) (setheading 0) (pendown)
-  (color "forestgreen")
-  (begin_fill)
-  (forward 50) (left 90) (forward 15) (left 90) 
-  (forward 50) (left 90) (forward 15) (left 90)
-  (end_fill)
-  
-  (penup) (goto -100 -20) (pendown)
-  (color "magenta")
-  (begin_fill)
-  (goto -160 -30) (goto -150 -70) (goto -100 -60)
-  (end_fill)
-  
-  (penup) (goto -95 0) (pendown)
-  (color "purple")
-  (goto 0 0)
-  
-  (penup) (goto -90 5) (pendown)
-  (color "white")
-  (goto -5 -40))
-
-(define (draw-sphere)
-  (penup) (goto 0 -12) (setheading 0) (pendown)
-  (color "white")
-  (begin_fill)
-  (circle 12)
-  (end_fill)
-  
-  (color "mediumseagreen")
-  (begin_fill)
-  (penup) (goto 0 -8) (pendown)
-  (circle 8)
-  (end_fill)
-  
-  (color "white")
-  (penup) (goto 0 -4) (pendown)
-  (circle 4))
+        (let ((start-x (xcor))
+              (start-y (ycor))
+              (start-h (heading)))
+          (penup)
+          (forward (/ size 2))
+          (left 90)
+          (forward (/ size 2))
+          (let ((cx1 (xcor))
+                (cy1 (ycor)))
+            (goto start-x start-y)
+            (setheading start-h)
+            (penup)
+            (forward size)
+            (left 90)
+            (forward size)
+            (let ((next-start-x (xcor))
+                  (next-start-y (ycor))
+                  (next-h (heading))
+                  (next-size (* size phi)))
+              (forward (/ next-size 2))
+              (left 90)
+              (forward (/ next-size 2))
+              (let ((cx2 (xcor))
+                    (cy2 (ycor)))
+                (penup)
+                (goto cx1 cy1)
+                (color (car colors))
+                (pendown)
+                (goto cx2 cy2)
+                (penup)
+                (goto next-start-x next-start-y)
+                (setheading next-h)
+                (fib-spiral-out next-size (- n 1) 
+                                (append (cdr colors) (list (car colors)))))))))))
 
 (define (draw)
   (bgcolor "black")
   (speed 0)
   
-  (draw-horse)
-  (draw-rider)
-  
   (penup) (goto 0 0) (setheading 45) (pendown)
-  (fib-spiral-out 2 13 '("cyan" "aqua" "springgreen" "yellow" "orange" "red"))
-  
-  (draw-sphere)
+  (fib-spiral-out 2 13 '("cyan" "aqua" "springgreen" "yellow" "orange" "red" "magenta" "blueviolet"))
   
   (hideturtle)
   (exitonclick))
